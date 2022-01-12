@@ -9,6 +9,7 @@ class PeliculasProvider {
   final String _language = 'en-US';
 
   int _popularesPage = 0;
+  bool _carregando = false;
 
   //Manejo de stream, corrente de dados
   //Lista de filmes
@@ -49,6 +50,9 @@ class PeliculasProvider {
   }
 
   Future<List<Pelicula>> getPopulares() async {
+    //Nao carregar tudo de uma vez, que pode gastar dados do usuario
+    if (_carregando) [];
+    _carregando = true;
     _popularesPage++;
 
     final url = Uri.http(
@@ -65,7 +69,7 @@ class PeliculasProvider {
 
     _populares.addAll(resp);
     popularesSink(_populares);
-
+    _carregando = false;
     return resp;
   }
 }

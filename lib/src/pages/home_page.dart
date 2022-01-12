@@ -6,8 +6,12 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   final peliculasProvider = PeliculasProvider();
+
   @override
   Widget build(BuildContext context) {
+    //filmes apenas na primeira execucao
+    peliculasProvider.getPopulares();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -57,11 +61,14 @@ class HomePage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 5.0),
-          FutureBuilder(
-            future: peliculasProvider.getPopulares(),
+          StreamBuilder(
+            stream: peliculasProvider.popularesStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                return MovieHorizontal(peliculas: snapshot.data!);
+                return MovieHorizontal(
+                  peliculas: snapshot.data!,
+                  seguintePagina: peliculasProvider.getPopulares,
+                );
               } else {
                 return Center(child: CircularProgressIndicator());
               }
