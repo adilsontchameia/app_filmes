@@ -1,3 +1,4 @@
+import 'package:app_filmes/src/providers/peliculas_provider.dart';
 import 'package:app_filmes/src/widgets/card_swiper_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,11 @@ class HomePage extends StatelessWidget {
   }
 
   Widget criarTarjetas() {
-    return CardSwiper(peliculas: [1, 2, 3, 4, 5]);
+    final peliculasProvider = new PeliculasProvider();
+    peliculasProvider.getEncines();
+    peliculasProvider.getEncines();
+    return CardSwiper(
+      peliculas: [1, 2, 3, 4, 5],
+    );
   }
 }

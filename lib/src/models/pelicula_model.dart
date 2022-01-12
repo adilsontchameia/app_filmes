@@ -32,37 +32,39 @@ class Pelicula {
   String releaseDate;
 
   Pelicula({
-    this.voteCount,
-    this.id,
-    this.video,
-    this.voteAverage,
-    this.title,
-    this.popularity,
-    this.posterPath,
-    this.originalLanguage,
-    this.originalTitle,
-    this.genreIds,
-    this.backdropPath,
-    this.adult,
-    this.overview,
-    this.releaseDate,
+    required this.voteCount,
+    required this.id,
+    required this.video,
+    required this.voteAverage,
+    required this.title,
+    required this.popularity,
+    required this.posterPath,
+    required this.originalLanguage,
+    required this.originalTitle,
+    required this.genreIds,
+    required this.backdropPath,
+    required this.adult,
+    required this.overview,
+    required this.releaseDate,
   });
 
 //Constructor de map, para gerar instancia de filme de um jSon
-  Pelicula.fromJsonMap(Map<String, dynamic> json) {
-    voteCount = json['vote_count'];
-    id = json['id'];
-    video = json['video'];
-    voteAverage = json['vote_average'] / 1; //Passar para double facilmente
-    title = json['title'];
-    popularity = json['popularity'] / 1; //Passar para double facilmente
-    posterPath = json['poster_path'];
-    originalLanguage = json['original_language'];
-    originalTitle = json['original_title'];
-    genreIds = json['genre_ids'].cast<int>();
-    backdropPath = json['backdrop_path'];
-    adult = json['adult'];
-    overview = json['overview'];
-    releaseDate = json['release_date'];
+  factory Pelicula.fromJsonMap(Map<String, dynamic> json) {
+    return Pelicula(
+      voteCount: json['vote_count'],
+      id: json['id'],
+      video: json['video'],
+      voteAverage: json['vote_average'] / 1,
+      title: json['title'],
+      popularity: json['popularity'] / 1,
+      posterPath: json['poster_path'],
+      originalLanguage: json['original_language'],
+      originalTitle: json['original_title'],
+      genreIds: json['genre_ids'].cast<int>(),
+      backdropPath: json['backdrop_path'],
+      adult: json['adult'],
+      overview: json['overview'],
+      releaseDate: json['release_date'],
+    );
   }
 }

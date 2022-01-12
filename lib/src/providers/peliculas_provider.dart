@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:app_filmes/src/models/pelicula_model.dart';
 
 class PeliculasProvider {
@@ -7,11 +9,17 @@ class PeliculasProvider {
 
   Future<List<Pelicula>> getEncines() async {
     final url = Uri.http(
-      _url, 
-      '3/movie/now_playing', 
-      {
- 'api_key' : _api_key,
-'language' _language
-      });
+      _url,
+      '3/movie/now_playing',
+      {'api_key': _apikey, 'language': _language},
+    );
+    final resp = await http.get(url);
+    final decodedDate = json.decode(resp.body);
+    //procurar cada um dos resultados e criar
+    final peliculas = new Peliculas.fromJsonList(
+      decodedDate['results'],
+    );
+
+    return peliculas.items;
   }
 }
