@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:app_filmes/src/models/atores_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:app_filmes/src/models/pelicula_model.dart';
 
@@ -13,7 +14,7 @@ class PeliculasProvider {
 
   //Manejo de stream, corrente de dados
   //Lista de filmes
-  List<Pelicula> _populares = [];
+  final List<Pelicula> _populares = [];
   //Stream - codigo de criacao
   final _popularesStreamController =
       StreamController<List<Pelicula>>.broadcast();
@@ -71,5 +72,19 @@ class PeliculasProvider {
     popularesSink(_populares);
     _carregando = false;
     return resp;
+  }
+
+  Future<List<Actor>> getCast(String peliId) async {
+    final url = Uri.http(
+      _url,
+      '3/movie/$peliId/credits',
+      {'api_key': _apikey, 'language': _language},
+    );
+    final resp = await http.get(url);
+    //armazenar a resposta do mapa
+    final decodedData = json.decode(resp.body);
+    final cast = Cast.fromJsonList(decodedData['cast']);
+    //vai nos retornar todo cast
+    return cast.actores;
   }
 }

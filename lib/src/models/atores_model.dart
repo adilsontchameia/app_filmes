@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
+//Instancia de ator
+//Recebe toda lista completa de todos
 class Cast {
   List<Actor> actores = [];
 
   Cast.fromJsonList(List<dynamic> jsonList) {
+    // ignore: unnecessary_null_comparison
     if (jsonList == null) return;
 
-    jsonList.forEach((item) {
+    for (var item in jsonList) {
       final actor = Actor.fromJsonMap(item);
       actores.add(actor);
-    });
+    }
   }
 }
 
@@ -45,5 +48,12 @@ class Actor {
       order: json['order'],
       profilePath: json['profile_path'],
     );
+  }
+  getFoto() {
+    if (profilePath == null) {
+      return 'http://forum.spaceengine.org/styles/se/theme/images/no_avatar.jpg';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$profilePath';
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'package:app_filmes/src/models/atores_model.dart';
+import 'package:app_filmes/src/providers/peliculas_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:app_filmes/src/models/pelicula_model.dart';
 
@@ -21,6 +23,7 @@ class PeliculaDetalhe extends StatelessWidget {
             _descricao(pelicula),
             _descricao(pelicula),
             _descricao(pelicula),
+            _criarCasting(pelicula),
           ])),
         ],
       ),
@@ -52,7 +55,7 @@ class PeliculaDetalhe extends StatelessWidget {
 
   Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: [
           ClipRRect(
@@ -95,6 +98,49 @@ class PeliculaDetalhe extends StatelessWidget {
       child: Text(
         pelicula.overview,
         textAlign: TextAlign.justify,
+      ),
+    );
+  }
+
+  Widget _criarCasting(Pelicula pelicula) {
+    final peliProvider = PeliculasProvider();
+
+    return FutureBuilder(
+      future: peliProvider.getCast(pelicula.id.toString()),
+      builder: (context, AsyncSnapshot<List<Actor>> snapshot) {
+        if (snapshot.hasData) {
+          return _criarAtoresPageView(snapshot.data!);
+        } else {
+          // ignore: prefer_const_constructors
+          return Center(
+            child: const CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _criarAtoresPageView(List<Actor> actores) {
+    return SizedBox(
+      height: 200.0,
+      child: PageView.builder(
+          pageSnapping: false,
+          controller: PageController(viewportFraction: 0.3, initialPage: 1),
+          itemCount: actores.length,
+          itemBuilder: (context, i) {
+            return Text('HIiii');
+          }),
+    );
+  }
+
+  Widget _actorTarjeta(Actor actor) {
+    return Container(
+      child: Column(
+        children: [
+          FadeInImage(
+              placeholder: AssetImage('assets/no_avatar.jpeg'),
+              image: actor.getFoto())
+        ],
       ),
     );
   }
