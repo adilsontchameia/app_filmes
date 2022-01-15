@@ -1,4 +1,5 @@
 import 'package:app_filmes/src/models/pelicula_model.dart';
+import 'package:app_filmes/src/pages/search_delegate.dart';
 import 'package:app_filmes/src/providers/peliculas_provider.dart';
 import 'package:app_filmes/src/widgets/card_swiper_widget.dart';
 import 'package:app_filmes/src/widgets/movie_horizontal.dart';
@@ -19,7 +20,12 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.indigoAccent,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: DataSearch(),
+              );
+            },
             icon: Icon(Icons.search),
           )
         ],
