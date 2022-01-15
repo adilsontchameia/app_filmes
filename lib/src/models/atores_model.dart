@@ -50,8 +50,9 @@ class Actor {
     );
   }
   getFoto() {
+    // ignore: unnecessary_null_comparison
     if (profilePath == null) {
-      return 'http://forum.spaceengine.org/styles/se/theme/images/no_avatar.jpg';
+      return 'https://cdn11.bigcommerce.com/s-auu4kfi2d9/stencil/59512910-bb6d-0136-46ec-71c445b85d45/e/933395a0-cb1b-0135-a812-525400970412/icons/icon-no-image.svg';
     } else {
       return 'https://image.tmdb.org/t/p/w500/$profilePath';
     }

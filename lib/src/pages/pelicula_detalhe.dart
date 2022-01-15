@@ -62,12 +62,12 @@ class PeliculaDetalhe extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.0),
             child: Image(
               image: NetworkImage(
-                pelicula.getPosterImg(),
+                pelicula.getBackgroundImg(),
               ),
-              height: 150,
+              height: 120,
             ),
           ),
-          SizedBox(width: 20.0),
+          const SizedBox(width: 20.0),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,24 +124,33 @@ class PeliculaDetalhe extends StatelessWidget {
     return SizedBox(
       height: 200.0,
       child: PageView.builder(
-          pageSnapping: false,
-          controller: PageController(viewportFraction: 0.3, initialPage: 1),
-          itemCount: actores.length,
-          itemBuilder: (context, i) {
-            return Text('HIiii');
-          }),
+        pageSnapping: false,
+        controller: PageController(viewportFraction: 0.3, initialPage: 1),
+        itemCount: actores.length,
+        itemBuilder: (context, i) => _actorTarjeta(actores[i]),
+      ),
     );
   }
 
   Widget _actorTarjeta(Actor actor) {
     return Container(
-      child: Column(
-        children: [
-          FadeInImage(
-              placeholder: AssetImage('assets/no_avatar.jpeg'),
-              image: actor.getFoto())
-        ],
+        child: Column(children: [
+      ClipRRect(
+        borderRadius: BorderRadius.circular(20.0),
+        child: FadeInImage(
+          placeholder: const AssetImage('assets/no_avatar.jpeg'),
+          fit: BoxFit.cover,
+          height: 150.0,
+          image: NetworkImage(actor.getFoto()),
+        ),
       ),
-    );
+      const SizedBox(
+        height: 10.0,
+      ),
+      Text(
+        actor.name,
+        overflow: TextOverflow.ellipsis,
+      )
+    ]));
   }
 }
