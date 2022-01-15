@@ -17,7 +17,12 @@ class HomePage extends StatelessWidget {
         centerTitle: false,
         title: Text('App Peliculas'),
         backgroundColor: Colors.indigoAccent,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search),
+          )
+        ],
       ),
       body: Container(
           child: Column(
